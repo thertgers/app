@@ -1,0 +1,39 @@
+{% extends 'project_list.html' %}
+{% block project_get %}
+<div class="col-10 bg-dark rounded align-self-start flex-grow-1 vh-100">
+    <div class="row row-auto">
+        <div class="col-auto">
+            <div id="list" class="list-group">
+                <a role="button" class="btn btn-dark disabled" >Project: {{ project.id }}</a>
+                <a role="button" class="btn btn-dark disabled">{{ project.categorie.name }}</a>
+                <a role="button" class="btn btn-dark" href="{% url 'note/add' %}">Nieuwe notitie</a>
+                {% for note in notes %}
+                <a class="list-group-item list-group-item-action list-group-item-dark" href="#list-item-{{ note.id }}">Item {{ note.id }}</a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-10 flex-grow-1">
+            <div data-bs-spy="scroll" data-bs-target="#list" data-bs-offset="0" class="scrollspy vh-100" tabindex="0">
+                {% for note in notes %}
+                <div class="card text-start text-white bg-dark" id="list-item-{{ note.id }}">
+                    <div class="card-header">
+                        <div class="btn-group" role="group">
+                            <a role="button" class="btn btn-dark" href="{% url 'note/update' note.id %}">E</a>
+                            <a role="button" class="btn btn-dark" href="{% url 'note/delete' note.id %}">X</a>
+                        </div>
+                        <sub>{{ note.categorie }}</sub><br>
+                    </div>
+                    <div class="card-body">
+                        {% if note.description == 'lorem' %}
+                        {% lorem 3 p %}
+                        {% else %}
+                        <p>{{ note.description|linebreaks }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

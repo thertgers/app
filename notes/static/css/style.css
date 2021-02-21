@@ -1,0 +1,63 @@
+#cover {
+    background: #222 url('https://unsplash.it/1920/1080/?random') center center no-repeat;
+    background-size: cover;
+    height: 100%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+#cover-caption {
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+.row:before {
+    content: '';
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    background-color: rgba(0,0,0,0.3);
+    z-index: -1;
+    border-radius: 10px;
+}
+input {
+    margin-top: 16px;
+}
+button {
+    margin-top: 16px;
+}
+a.btn-primary {
+    margin-top: 16px;
+}
+.nav-tabs{
+	float: left;
+	margin-right: 20px;
+	border: 1px solid #ccc;
+}
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{
+	background: #ddd;
+}
+.nav-tabs>li{
+	float: none;
+}
+.nav-tabs>li>a{
+	margin-right: 0;
+}
+.accordion-button:not(.collapsed){
+    background-color: #00000000;
+}
+h1,h2,h3,h4,h5,h6,label,p {
+    color: white;
+}
+.scrollspy {
+    position: relative;
+    height: 1080px;
+    overflow: auto;
+}
+li {
+    color: white;
+}

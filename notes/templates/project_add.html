@@ -1,0 +1,15 @@
+{% extends 'project_list.html' %}
+{% block project_add %}
+<div class="col-auto bg-dark rounded align-self-start">
+<form method="post" novalidate autofocus>
+    {% csrf_token %}
+    <table border="1">
+        {{ ProjectForm }}
+        <div>
+            <button type='submit'>Project toevoegen</button>
+            {{ ProjectForm.id }}
+        </div>
+    </table>
+</form>
+</div>
+{% endblock %}

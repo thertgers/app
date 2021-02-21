@@ -1,0 +1,11 @@
+{% extends 'category_list.html' %}
+{% load crispy_forms_tags %}
+{% block category_update %}
+<div class="col-auto bg-dark rounded align-self-start">
+    <form method="post" novalidate autofocus>
+        {% csrf_token %}
+        {{ CategoryForm|crispy }}
+        <button type='submit'>Categorie wijzigen</button>
+    </form>
+</div>
+{% endblock %}

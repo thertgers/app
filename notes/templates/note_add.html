@@ -1,0 +1,13 @@
+{% extends 'project_list.html' %}
+{% load crispy_forms_tags %}
+{% block note_add %}
+<div class="col-auto bg-dark rounded align-self-start">
+    <form method="post" novalidate autofocus>
+        {% csrf_token %}
+        <table border="1">
+            {{ NoteForm|crispy }}
+        </table>
+        <button type='submit'>Notitie toevoegen</button>
+    </form>
+</div>
+{% endblock %}

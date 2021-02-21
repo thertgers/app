@@ -1,0 +1,25 @@
+{% extends 'navbar.html' %}
+{% block content %}
+<div class="col-auto bg-dark rounded align-self-start">
+    <nav class="navbar navbar-dark bg-dark rounded">
+        <ul class="navbar-nav">
+            <div>
+                <a role="button" class="btn btn-dark" href="{% url 'project/add' %}">Nieuw Project</a>
+            </div>
+            {% for project in projects %}
+            <div class="nav-item">
+                {% csrf_token %}
+                <div class="btn-group" role="group">
+                    <a role="button" class="btn btn-dark" href="{% url 'project/delete' project.id %}">X</a>
+                    <a role="button" class="btn btn-dark" href="{% url 'project/get' project.id %}" id="project{{ project.id }}">Project {{ project.id }}</a>
+                </div>
+            </div>
+            {% endfor %}
+        </ul>
+    </nav>
+</div>
+{% block project_get %}{% endblock %}
+{% block project_add %}{% endblock %}
+{% block note_update %}{% endblock %}
+{% block note_add %}{% endblock %}
+{% endblock %}

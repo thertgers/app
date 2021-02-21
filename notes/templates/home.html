@@ -1,0 +1,16 @@
+{% extends 'navbar.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="col-auto bg-dark rounded align-self-start">
+    <div class="card-header">
+        <h3>Welkom: {{ username }}</h3>
+    </div>
+    <div class="card-body">
+        <p>
+            Statistieken: <br>
+            Projecten: {{ projectCount }} <br>
+            Notities: {{ noteCount }} <br>
+        </p>
+    </div>
+</div>
+{% endblock %}
