@@ -1,7 +1,4 @@
-from django import forms
-from django.test import TestCase
 from django.db import models
-from django.forms import ModelForm
 from django.contrib.auth.models import User
 
 # Create your models here.
@@ -26,33 +23,12 @@ class Category (models.Model):
     def __str__(self):
         return self.name
 
-class CategoryForm(ModelForm):
-    class Meta:
-        model = Category
-        fields = '__all__'
-        widgets = {
-            'name': forms.TextInput(attrs={'placeholder': 'Naam', 'autofocus': True}),
-        }
-        labels = {
-            'name': '',
-            'forProject': 'Voor Project',
-            'forNote': 'Voor Notitie'
-        }
-
-
 class Project(models.Model):
     id = models.AutoField(primary_key=True, unique=True)
+    name = models.CharField(max_length=64)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='Projects')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, default='2')
-
-class ProjectForm(ModelForm):
-    class Meta:
-        model = Project
-        fields = ['category']
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['category'].queryset = Category.objects.filter(forProject=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
 class Note(models.Model):
     id = models.AutoField(primary_key=True, unique=True)
@@ -60,15 +36,10 @@ class Note(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='Notes')
     Project = models.ForeignKey(Project, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, default='2')
+    created_at = models.DateTimeField(auto_now_add=True)
 
-class NoteForm(ModelForm):
-    class Meta:
-        model = Note
-        fields = ['description', 'category']
-        widgets = {
-            'description': forms.Textarea(attrs={'placeholder': 'Plaats hier een notitie. Voer "lorem" in voor 3 gegenereerde paragrafen.', 'autofocus': True}),
-        }
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['category'].queryset = Category.objects.filter(forNote=True)
+class Attachment(models.Model):
+    id = models.AutoField(primary_key=True, unique=True)
+    note = models.ForeignKey(Note, on_delete=models.CASCADE)
+    file = models.FileField(upload_to='documents/%Y/%m/%d/')
+    description = models.CharField(max_length=255)

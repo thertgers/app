@@ -1,0 +1,14 @@
+{% extends 'project_list.html' %}
+{% load crispy_forms_tags %}
+{% block upload %}
+<div class="col-auto bg-dark rounded align-self-start">
+    <form method="post" enctype="multipart/form-data" novalidate autofocus>
+        {% csrf_token %}
+        <p>
+            Omschrijving:{{ AttachmentForm.description }}
+            {{ AttachmentForm.file}}
+        </p>
+        <button type='submit'>Bijlage toevoegen</button>
+    </form>
+</div>
+{% endblock %}

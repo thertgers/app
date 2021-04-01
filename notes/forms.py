@@ -6,6 +6,9 @@ from django.contrib.auth import (
 from django.utils.translation import gettext, gettext_lazy as _
 from django import forms
 
+from .models import Category, Project, Note, Attachment
+
+
 class RegisterForm(UserCreationForm):
     password1 = forms.CharField(
         label=_("Password"),
@@ -64,3 +67,46 @@ class LoginForm(AuthenticationForm):
 
         self.fields['password'].label = ''
         self.fields['password'].widget = forms.PasswordInput(attrs={'placeholder': 'Wachtwoord'})
+
+
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = '__all__'
+        widgets = {
+            'name': forms.TextInput(attrs={'placeholder': 'Naam', 'autofocus': True}),
+        }
+        labels = {
+            'name': '',
+            'forProject': 'Voor Project',
+            'forNote': 'Voor Notitie'
+        }
+
+
+class ProjectForm(forms.ModelForm):
+    class Meta:
+        model = Project
+        fields = ['name', 'category']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['category'].queryset = Category.objects.filter(forProject=True)
+
+
+class NoteForm(forms.ModelForm):
+    class Meta:
+        model = Note
+        fields = ['description', 'category']
+        widgets = {
+            'description': forms.Textarea(attrs={'placeholder': 'Plaats hier een notitie. Voer "lorem" in voor 3 gegenereerde paragrafen.', 'autofocus': True}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['category'].queryset = Category.objects.filter(forNote=True)
+
+
+class AttachmentForm(forms.ModelForm):
+    class Meta:
+        model = Attachment
+        fields = ['note', 'file', 'description']

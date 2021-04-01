@@ -11,7 +11,11 @@
                 {% csrf_token %}
                 <div class="btn-group" role="group">
                     <a role="button" class="btn btn-dark" href="{% url 'project/delete' project.id %}">X</a>
-                    <a role="button" class="btn btn-dark" href="{% url 'project/get' project.id %}" id="project{{ project.id }}">Project {{ project.id }}</a>
+                    {% if project.name == '' %}
+                    <a role="button" class="btn btn-dark" href="{% url 'project/get' project.id %}" id="project{{ project.id }}">Naamloos</a>
+                    {% else %}
+                    <a role="button" class="btn btn-dark" href="{% url 'project/get' project.id %}" id="project{{ project.id }}">{{ project.name }}</a>
+                    {% endif %}
                 </div>
             </div>
             {% endfor %}
@@ -22,4 +26,5 @@
 {% block project_add %}{% endblock %}
 {% block note_update %}{% endblock %}
 {% block note_add %}{% endblock %}
+{% block upload %}{% endblock %}
 {% endblock %}

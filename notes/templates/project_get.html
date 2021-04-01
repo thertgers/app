@@ -4,8 +4,13 @@
     <div class="row row-auto">
         <div class="col-auto">
             <div id="list" class="list-group">
-                <a role="button" class="btn btn-dark disabled" >Project: {{ project.id }}</a>
-                <a role="button" class="btn btn-dark disabled">{{ project.categorie.name }}</a>
+                {% if project.name == '' %}
+                    <a role="button" class="btn btn-dark disabled">Naamloos</a>
+                {% else %}
+                    <a role="button" class="btn btn-dark disabled">Naam: {{ project.name }}</a>
+                {% endif %}
+                <a role="button" class="btn btn-dark disabled">Categorie: {{ project.category.name }}</a>
+                <a role="button" class="btn btn-dark disabled">{{ project.created_at }}</a>
                 <a role="button" class="btn btn-dark" href="{% url 'note/add' %}">Nieuwe notitie</a>
                 {% for note in notes %}
                 <a class="list-group-item list-group-item-action list-group-item-dark" href="#list-item-{{ note.id }}">Item {{ note.id }}</a>
@@ -18,10 +23,12 @@
                 <div class="card text-start text-white bg-dark" id="list-item-{{ note.id }}">
                     <div class="card-header">
                         <div class="btn-group" role="group">
-                            <a role="button" class="btn btn-dark" href="{% url 'note/update' note.id %}">E</a>
-                            <a role="button" class="btn btn-dark" href="{% url 'note/delete' note.id %}">X</a>
+                            <a role="button" class="btn btn-dark" href="{% url 'note/delete' note.id %}">Verwijderen</a>
+                            <a role="button" class="btn btn-dark" href="{% url 'note/update' note.id %}">Aanpassen</a>
+                            <a role="button" class="btn btn-dark" href="{% url 'note/upload' note.id %}">Bestand bijvoegen</a>
+                            {{ note.file }}
                         </div>
-                        <sub>{{ note.categorie }}</sub><br>
+                        <sub>Categorie: {{ note.category.name }}</sub><br>
                     </div>
                     <div class="card-body">
                         {% if note.description == 'lorem' %}
@@ -29,6 +36,7 @@
                         {% else %}
                         <p>{{ note.description|linebreaks }}</p>
                         {% endif %}
+                        <p class="align-text-bottom text-end text-muted">{{ note.created_at }}</p>
                     </div>
                 </div>
                 {% endfor %}

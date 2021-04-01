@@ -5,8 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from .models import Note, Project, Category
-from .models import NoteForm, ProjectForm, CategoryForm
-from .forms import RegisterForm, LoginForm
+from .forms import RegisterForm, LoginForm, CategoryForm, ProjectForm, NoteForm, AttachmentForm
 from django.contrib.auth import (
     REDIRECT_FIELD_NAME, get_user_model, update_session_auth_hash,
 )
@@ -198,3 +197,14 @@ def note_update(request, id):
     listNotes = list(Note.objects.filter(Project=objectProject))
     listProjects = Project.objects.all()
     return render(request, 'note_update.html', {'projects': listProjects, 'notes':listNotes, 'NoteForm': form})
+
+def note_upload(request, id):
+    if request.method == 'POST':
+        form = AttachmentForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/home')
+    else:
+        form = AttachmentForm()
+        form.note = id
+    return render(request, 'note_upload.html', {'AttachmentForm': form})
