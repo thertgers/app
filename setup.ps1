@@ -2,7 +2,7 @@
 choco install mysql mysql-connector python git -y
 Start-Process "C:\tools\mysql\current\bin\mysql.exe" -ArgumentList '-u root -e "create schema notes"'
 py pip install django django-crispy-forms
-Start-Process "C:\Program Files\Git\cmd\git.exe" -ArgumentList 'clone https://github.com/thertgers/app.git' -WorkingDirectory $env:USERPROFILE
+Start-Process "C:\Program Files\Git\cmd\git.exe" -ArgumentList 'clone https://github.com/thertgers/app.git' -WorkingDirectory $env:USERPROFILE -Wait
 cd "$env:USERPROFILE\app"
 py manage.py migrate
 py manage.py loaddata inital_data.json
